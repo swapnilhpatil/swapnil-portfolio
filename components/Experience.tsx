@@ -2,8 +2,8 @@ const experiences = [
   {
     title: "Senior Software Engineer",
     company: "Teksolto Softwares",
-    period: "Mar 2022 – Present",
-    duration: "2+ years",
+    period: "May 2022 – Present",
+    duration: "3+ yrs 11 mos",
     current: true,
     description:
       "Leading frontend architecture and development with a focus on scalable microfrontend systems. Driving technical decisions, code quality improvements with SonarQube, and mentoring junior engineers on React, TypeScript, and Node.js best practices.",
@@ -11,8 +11,8 @@ const experiences = [
   {
     title: "Software Development Engineer",
     company: "Teksolto Softwares",
-    period: "Nov 2017 – Mar 2022",
-    duration: "4 yrs 5 mos",
+    period: "Nov 2017 – May 2022",
+    duration: "4 yrs 7 mos",
     current: false,
     description:
       "Built and maintained full-stack web and mobile applications using React, Angular, Ionic, Node.js and Java Spring Boot. Delivered end-to-end features from database layer through to polished user interfaces, maintaining a strong focus on performance and user experience.",
@@ -37,9 +37,8 @@ export default function Experience() {
         >
           {/* dot */}
           <div
-            className={`absolute -left-[29px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-acc ${
-              exp.current ? "bg-acc shadow-[0_0_12px_rgba(74,222,128,0.5)]" : "bg-c1"
-            }`}
+            className={`absolute -left-[29px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-acc ${exp.current ? "bg-acc shadow-[0_0_12px_rgba(74,222,128,0.5)]" : "bg-c1"
+              }`}
           />
 
           <div className="flex justify-between items-start gap-3 flex-wrap mb-2">
@@ -55,9 +54,8 @@ export default function Experience() {
             <div className="text-right">
               <p className="text-slate-500 font-mono text-xs">{exp.period}</p>
               <p
-                className={`font-mono text-[11px] mt-0.5 ${
-                  exp.current ? "text-acc" : "text-slate-500"
-                }`}
+                className={`font-mono text-[11px] mt-0.5 ${exp.current ? "text-acc" : "text-slate-500"
+                  }`}
               >
                 {exp.duration}
               </p>

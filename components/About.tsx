@@ -2,7 +2,7 @@ export default function About() {
   return (
     <div className="relative bg-c2 border border-white/[0.07] rounded-2xl p-8 mb-10 text-slate-400 text-sm leading-relaxed top-accent overflow-hidden">
       <p>
-        I&apos;m a software engineer passionate about what I do. With 6 years of experience I&apos;ve
+        I&apos;m a software engineer passionate about what I do. With 8 years of experience I&apos;ve
         learned to adapt and embrace challenges in the ever-evolving world of computer software.
         One thing that drives me is continuous growth from these experiences.
       </p>
