@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Background from "@/components/Background";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
@@ -14,7 +13,6 @@ export default function Home() {
   return (
     <main className="min-h-screen relative" style={{ background: "var(--bg-primary)" }}>
       <Background />
-      <Navbar />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 pb-20" style={{ paddingTop: 64 }}>
 
