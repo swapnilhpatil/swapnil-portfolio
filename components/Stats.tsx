@@ -1,6 +1,6 @@
 const stats = [
-  { num: "6", suffix: "+", label: "Years Exp" },
-  { num: "2", suffix: "", label: "Companies" },
+  { num: "8", suffix: "+", label: "Years Exp" },
+  { num: "1", suffix: "", label: "Companies" },
   { num: "12", suffix: "+", label: "Technologies" },
 ];
 
