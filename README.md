@@ -2,7 +2,7 @@
 
 Welcome to the source code of my personal portfolio. Think of this repository as my digital living room where I keep my trophies (projects), my journals (skills), and my playbook (tech stack). 
 
-Check out the live version here: [[Link to your live portfolio](https://swapnil-portfolio-kappa.vercel.app/)]
+Check out the live version here: [[Swapnil Portofolio](https://swapnil-portfolio-kappa.vercel.app/)]
 
 ## 🧬 The DNA (Tech Stack)
 
