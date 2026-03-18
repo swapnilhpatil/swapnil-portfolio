@@ -11,7 +11,7 @@ export default function Hero() {
 
       {/* Name */}
       <h1
-        className="font-serif leading-[1.05] text-white tracking-tight"
+        className="font-serif leading-[1.05] text-[var(--txt-primary)] tracking-tight"
         style={{ fontSize: "clamp(48px, 7vw, 80px)" }}
       >
         Swapnil
@@ -20,7 +20,7 @@ export default function Hero() {
       </h1>
 
       {/* Subtitle */}
-      <p className="text-slate-400 max-w-xl leading-relaxed font-light text-base">
+      <p className="text-[var(--txt-secondary)] max-w-xl leading-relaxed font-light text-base">
         Full Stack Engineer crafting scalable web systems with React, Next.js,
         Node.js and modern frontend architecture — Microfrontend specialist,
         problem solver.
@@ -28,7 +28,7 @@ export default function Hero() {
 
       {/* Meta */}
       <div className="flex items-center gap-4 flex-wrap">
-        <span className="flex items-center gap-1.5 text-slate-500 font-mono text-xs">
+        <span className="flex items-center gap-1.5 text-[var(--txt-muted)] font-mono text-xs">
           <svg
             width="14"
             height="14"
@@ -50,7 +50,7 @@ export default function Hero() {
           </svg>
           Pune, Maharashtra, India
         </span>
-        <span className="flex items-center gap-1.5 text-slate-500 font-mono text-xs">
+        <span className="flex items-center gap-1.5 text-[var(--txt-muted)] font-mono text-xs">
           <svg
             width="14"
             height="14"
@@ -81,7 +81,7 @@ export default function Hero() {
         </Link>
         <a
           href="mailto:swapnil@example.com"
-          className="inline-flex items-center gap-2 bg-transparent text-slate-200 px-6 py-3 rounded-lg text-sm font-medium border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all"
+          className="inline-flex items-center gap-2 bg-transparent text-[var(--txt-primary)] px-6 py-3 rounded-lg text-sm font-medium border border-[var(--border-col)] hover:border-[var(--border-hover)] hover:bg-[var(--border-col)] transition-all"
         >
           <svg
             width="15"
