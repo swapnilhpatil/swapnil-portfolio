@@ -18,7 +18,7 @@ export default function Stats() {
               {s.suffix}
             </span>
           </div>
-          <div className="text-slate-500 font-mono text-xs mt-1.5 uppercase tracking-widest">
+          <div className="text-[var(--txt-muted)] font-mono text-xs mt-1.5 uppercase tracking-widest">
             {s.label}
           </div>
         </div>
