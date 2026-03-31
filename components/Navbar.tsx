@@ -1,15 +1,16 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { label: "Home",         href: "#home" },
-  { label: "About",        href: "#about" },
-  { label: "Work",         href: "#stack" },
-  { label: "Projects",     href: "#experience" },
-  { label: "Blog",         href: "#skills" },
-  { label: "Certificates", href: "#education" },
-  { label: "Contact",      href: "#contact" },
+  { label: "Home",       href: "/#home" },
+  { label: "About",      href: "/#about" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Projects",   href: "/#projects" },
+  { label: "Stack",      href: "/#stack" },
+  { label: "Blog",       href: "/#blog" },
+  { label: "Contact",    href: "/#contact" },
 ];
 
 function SunIcon() {
@@ -33,6 +34,7 @@ function MoonIcon() {
 }
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isDark, setIsDark] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -81,7 +83,7 @@ export default function Navbar() {
         }}>
 
           {/* ── LOGO: SP only ── */}
-          <Link href="#home" style={{ textDecoration: "none", flexShrink: 0 }}>
+          <Link href="/#home" style={{ textDecoration: "none", flexShrink: 0 }}>
             <div style={{
               width: 40, height: 40, borderRadius: 12,
               background: "linear-gradient(135deg, var(--acc), var(--acc2))",
@@ -99,14 +101,14 @@ export default function Navbar() {
           {/* ── DESKTOP LINKS ── */}
           <div className="hidden md:flex" style={{ alignItems: "center", gap: 0 }}>
             {navLinks.map((l) => (
-              <a
+              <Link
                 key={l.label}
                 href={l.href}
-                className={`nav-link${activeSection === l.href.slice(1) ? " active" : ""}`}
-                onClick={() => setActiveSection(l.href.slice(1))}
+                className={`nav-link${activeSection === l.href.split('#')[1] ? " active" : ""}`}
+                onClick={() => setActiveSection(l.href.split('#')[1])}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -152,15 +154,15 @@ export default function Navbar() {
             }}
           >
             {navLinks.map((l) => (
-              <a
+              <Link
                 key={l.label}
                 href={l.href}
                 className="nav-link"
                 style={{ display: "flex", width: "100%", padding: "11px 14px", fontSize: 14 }}
-                onClick={() => { setActiveSection(l.href.slice(1)); closeMenu(); }}
+                onClick={() => { setActiveSection(l.href.split('#')[1]); closeMenu(); }}
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </div>
         )}
