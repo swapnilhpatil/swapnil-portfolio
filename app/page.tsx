@@ -10,6 +10,7 @@ import Skills from "@/components/Skills";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import BlogCard from "@/components/BlogCard";
+import Projects from "@/components/Projects";
 
 export default function Home() {
   return (
@@ -29,29 +30,34 @@ export default function Home() {
           <About />
         </section>
 
+        <section id="experience" style={{ paddingTop: 24 }}>
+          <SectionLabel>Professional Experience</SectionLabel>
+          <Experience />
+        </section>
+
+        <section id="projects" style={{ paddingTop: 24 }}>
+          <SectionLabel>Selected Projects</SectionLabel>
+          <Projects />
+        </section>
+
         <section id="stack" style={{ paddingTop: 24 }}>
           <SectionLabel>Tech Stack</SectionLabel>
           <TechStack />
         </section>
 
-        <section id="experience" style={{ paddingTop: 24 }}>
-          <SectionLabel>Experience</SectionLabel>
-          <Experience />
-        </section>
-
         <section id="skills" style={{ paddingTop: 24 }}>
-          <SectionLabel>Skills</SectionLabel>
+          <SectionLabel>Core Skills</SectionLabel>
           <Skills />
         </section>
 
         <section id="education" style={{ paddingTop: 24 }}>
-          <SectionLabel>Education</SectionLabel>
+          <SectionLabel>Education & Certificates</SectionLabel>
           <Education />
         </section>
 
         <section id="blog" style={{ paddingTop: 24 }}>
           <SectionLabel>Articles & Insights</SectionLabel>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <BlogCard 
               title="How to Build Great APIs"
               excerpt="A practical, human-friendly guide to API design and documentation. Learn how to build APIs that developers actually enjoy using."
@@ -59,6 +65,14 @@ export default function Home() {
               image="/images/api-guide-banner.png"
               tags={["API Design", "Best Practices", "DX"]}
               slug="api-guide"
+            />
+            <BlogCard 
+              title="Publishing React Components to npm"
+              excerpt="A complete guide to building and publishing a React loader overlay to npm. Learn how to scaffold library projects, configure builds, and ship open source."
+              date="March 2026"
+              image="/images/publish-npm-banner.png"
+              tags={["React", "npm", "Open Source", "TypeScript"]}
+              slug="publish-npm-package"
             />
           </div>
         </section>
