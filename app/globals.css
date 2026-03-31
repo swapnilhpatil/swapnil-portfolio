@@ -164,7 +164,7 @@ body {
 .blog-content h2 {
   font-size: 1.875rem;
   font-weight: 700;
-  color: white;
+  color: var(--txt-primary);
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
@@ -173,7 +173,7 @@ body {
 .blog-content h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--txt-primary);
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
@@ -219,5 +219,5 @@ body {
 }
 .blog-content th {
   background: var(--bg-card2);
-  color: white;
+  color: var(--txt-primary);
 }
