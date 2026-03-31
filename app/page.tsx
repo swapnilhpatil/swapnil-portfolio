@@ -9,6 +9,7 @@ import Experience from "@/components/Experience";
 import Skills from "@/components/Skills";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
+import BlogCard from "@/components/BlogCard";
 
 export default function Home() {
   return (
@@ -46,6 +47,20 @@ export default function Home() {
         <section id="education" style={{ paddingTop: 24 }}>
           <SectionLabel>Education</SectionLabel>
           <Education />
+        </section>
+
+        <section id="blog" style={{ paddingTop: 24 }}>
+          <SectionLabel>Articles & Insights</SectionLabel>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <BlogCard 
+              title="How to Build Great APIs"
+              excerpt="A practical, human-friendly guide to API design and documentation. Learn how to build APIs that developers actually enjoy using."
+              date="March 2026"
+              image="/images/api-guide-banner.png"
+              tags={["API Design", "Best Practices", "DX"]}
+              slug="api-guide"
+            />
+          </div>
         </section>
 
         <section id="contact" style={{ paddingTop: 24 }}>
