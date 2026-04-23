@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 import Background from "@/components/Background";
 import CodeBlock from "@/components/CodeBlock";
 import { ArrowLeft, Calendar, Clock, Tag, Share2 } from "lucide-react";
+import JsonLd from "@/components/JsonLd";
 
 interface BlogPost {
   title: string;
@@ -174,12 +175,7 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
       <Background />
       <Navbar />
 
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      )}
+      {jsonLd && <JsonLd data={jsonLd} />}
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 pt-32 pb-20">
         {/* Back Link */}
