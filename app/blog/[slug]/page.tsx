@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Link from "next/link";
 import Image from "next/image";
+import { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Background from "@/components/Background";
 import CodeBlock from "@/components/CodeBlock";
@@ -16,6 +17,8 @@ interface BlogPost {
   content: string;
   banner: string;
   tags: string[];
+  date: string;
+  readTime: string;
 }
 
 async function getBlogPost(slug: string): Promise<BlogPost | null> {
@@ -38,30 +41,116 @@ async function getBlogPost(slug: string): Promise<BlogPost | null> {
   if (!filePath) return null;
   
   const fileContent = fs.readFileSync(filePath, "utf8");
-  
-  // Basic parsing for Title and Subtitle from metadata/top of file
   const lines = fileContent.split("\n");
-  const title = lines[0].replace("# ", "").trim();
-  const subtitle = lines[1].replace("### ", "").trim();
+
+  // Extract Title
+  const titleLine = lines.find(l => l.startsWith("# "));
+  const title = titleLine ? titleLine.replace("# ", "").trim() : "Untitled Post";
+
+  // Extract Subtitle (###)
+  const subtitleLine = lines.find(l => l.startsWith("### "));
+  const subtitle = subtitleLine ? subtitleLine.replace("### ", "").trim() : "";
+
+  // Extract Metadata Line (often starts with > and contains "Published" or "By")
+  const metaLine = lines.find(l => l.startsWith("> ") && (l.includes("Published") || l.includes("By") || l.includes("read")));
+  const metaText = metaLine ? metaLine.replace("> ", "").replace(/\*/g, "").replace(/__/g, "").trim() : "";
+
+  // Extract Tags from metaLine or looking for "Tags:"
+  let tags: string[] = [];
+  if (metaText.toLowerCase().includes("tags:")) {
+    const tagsPart = metaText.split(/tags:/i)[1].split("·")[0].trim();
+    tags = tagsPart.split(",").map(t => t.trim());
+  } else if (slug === "api-guide") {
+    tags = ["API Design", "Best Practices", "DX"];
+  }
+
+  // Extract date and read time from metaLine
+  const dateMatch = metaText.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}/);
+  const date = dateMatch ? dateMatch[0] : "March 2026";
+
+  const readTimeMatch = metaText.match(/(\d+)\s*min\s*read/i);
+  const readTime = readTimeMatch ? `${readTimeMatch[1]} min read` : "10 min read";
   
-  // Content extraction - more robust separator check
-  const separatorIndex = fileContent.indexOf("---");
-  const contentStart = separatorIndex !== -1 ? fileContent.indexOf("---", separatorIndex + 1) + 3 : 0;
-  const content = contentStart > 3 ? fileContent.slice(contentStart).trim() : fileContent.trim();
+  // Content extraction - find where the actual content starts (after the second --- or after the header)
+  const separators = [];
+  let pIndex = -1;
+  while ((pIndex = fileContent.indexOf("---", pIndex + 1)) !== -1) {
+    separators.push(pIndex);
+  }
+  
+  const contentStart = separators.length >= 2 ? separators[1] + 3 : (separators.length === 1 ? separators[0] + 3 : 0);
+  const content = fileContent.slice(contentStart).trim();
+
+  // Use dynamic banner based on slug
+  const banner = slug === "publish-npm-package" 
+    ? "/images/publish-npm-banner.png" 
+    : "/images/api-guide-banner.png";
 
   return {
     title,
-    subtitle,
-    meta: "", 
+    subtitle: subtitle || (metaText.length < 100 ? metaText : ""), 
+    meta: metaText, 
     content,
-    banner: "/images/api-guide-banner.png",
-    tags: ["API Design", "Best Practices", "DX"]
+    banner,
+    tags: tags.length > 0 ? tags : ["Tech", "Engineering"],
+    date,
+    readTime
+  };
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getBlogPost(slug);
+
+  if (!post) {
+    return {
+      title: "Post Not Found",
+    };
+  }
+
+  return {
+    title: `${post.title} | Swapnil Patil`,
+    description: post.subtitle,
+    openGraph: {
+      title: post.title,
+      description: post.subtitle,
+      type: "article",
+      url: `https://swapnil-portfolio-kappa.vercel.app/blog/${slug}`,
+      images: [
+        {
+          url: post.banner,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.subtitle,
+      images: [post.banner],
+    },
   };
 }
 
 export default async function BlogPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getBlogPost(slug);
+
+  const jsonLd = post ? {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.subtitle,
+    image: `https://swapnil-portfolio-kappa.vercel.app${post.banner}`,
+    author: {
+      "@type": "Person",
+      name: "Swapnil Patil",
+      url: "https://swapnil-portfolio-kappa.vercel.app/",
+    },
+    datePublished: post.date ? new Date(post.date).toISOString().split('T')[0] : "2026-03-01",
+  } : null;
 
   if (!post) {
     return (
@@ -84,6 +173,13 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
     <main className="min-h-screen relative bg-[var(--bg-primary)]">
       <Background />
       <Navbar />
+
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 pt-32 pb-20">
         {/* Back Link */}
@@ -120,11 +216,11 @@ export default async function BlogPage({ params }: { params: Promise<{ slug: str
           <div className="flex flex-wrap items-center gap-6 text-sm font-mono text-txt-muted border-y border-border-col py-6">
             <div className="flex items-center gap-2">
               <Calendar size={14} className="text-acc" />
-              <span>March 2026</span>
+              <span>{post.date}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock size={14} className="text-acc" />
-              <span>10 min read</span>
+              <span>{post.readTime}</span>
             </div>
             <div className="flex items-center gap-2">
               <Share2 size={14} className="text-acc cursor-pointer hover:text-[var(--txt-primary)] transition-colors" />

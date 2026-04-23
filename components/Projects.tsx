@@ -141,7 +141,7 @@ export default function Projects() {
       </div>
 
       {projects.map((project) => (
-        <div 
+        <article 
           key={project.id} 
           className={`project-card relative bg-[#111118] border border-white/[0.07] rounded-xl p-8 overflow-hidden transition-all duration-300 hover:border-white/15 hover:-translate-y-1 ${project.className}`}
         >
@@ -173,6 +173,7 @@ export default function Projects() {
                     href={project.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
+                    aria-label={`Visit project: ${project.name}`}
                     className="text-[10px] text-acc border border-acc/20 bg-acc/5 px-2 py-0.5 rounded-full hover:bg-acc/10 transition-colors"
                   >
                     ↗ {project.url.replace('https://', '')}
@@ -255,7 +256,7 @@ export default function Projects() {
               </div>
             ))}
           </div>
-        </div>
+        </article>
       ))}
 
       <style jsx>{`
