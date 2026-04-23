@@ -71,6 +71,7 @@ export default function Hero() {
         <Link
           href="https://www.linkedin.com/in/swapnilhpatil"
           target="_blank"
+          aria-label="Visit Swapnil's LinkedIn Profile"
           className="inline-flex items-center gap-2 bg-acc text-c1 px-6 py-3 rounded-lg text-sm font-semibold hover:bg-green-500 transition-all hover:-translate-y-0.5"
         >
           <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
@@ -81,6 +82,7 @@ export default function Hero() {
         </Link>
         <a
           href="mailto:swapnil@example.com"
+          aria-label="Send an email to Swapnil"
           className="inline-flex items-center gap-2 bg-transparent text-[var(--txt-primary)] px-6 py-3 rounded-lg text-sm font-medium border border-[var(--border-col)] hover:border-[var(--border-hover)] hover:bg-[var(--border-col)] transition-all"
         >
           <svg
