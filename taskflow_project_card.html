@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: #1e1e2e;
+    --accent-npm: #f76a6a;
+    --accent-demo: #f7c46a;
+    --accent-port: #7c6af7;
+    --text: #e8e8f0;
+    --muted: #6b6b82;
+    --tag-bg: #16161f;
+  }
+
+  body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    padding: 48px 32px;
+    max-width: 860px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-npm);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.05;
+    margin-bottom: 48px;
+    letter-spacing: -0.02em;
+  }
+
+  .section-title span { color: var(--accent-npm); }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.2s;
+    margin-bottom: 32px;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-npm), var(--accent-demo), var(--accent-port));
+  }
+
+  .project-card:hover { border-color: #2e2e45; transform: translateY(-2px); }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #fca5a5;
+  }
+
+  .badge-opensource {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-npm);
+    border: 1px solid rgba(247, 106, 106, 0.3);
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(247, 106, 106, 0.06);
+  }
+
+  .badge-fullstack {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-demo);
+    border: 1px solid rgba(247, 196, 106, 0.3);
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(247, 196, 106, 0.06);
+  }
+
+  .project-tagline {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 22px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Link cluster */
+  .link-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 26px;
+  }
+
+  .link-pill {
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 5px 13px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: opacity 0.18s, transform 0.15s;
+  }
+
+  .link-pill:hover { opacity: 0.82; transform: translateY(-1px); }
+
+  .pill-npm {
+    background: rgba(247, 106, 106, 0.1);
+    border: 1px solid rgba(247, 106, 106, 0.35);
+    color: #fca5a5;
+  }
+
+  .pill-demo {
+    background: rgba(247, 196, 106, 0.1);
+    border: 1px solid rgba(247, 196, 106, 0.35);
+    color: #fcd98a;
+  }
+
+  .pill-portfolio {
+    background: rgba(124, 106, 247, 0.1);
+    border: 1px solid rgba(124, 106, 247, 0.35);
+    color: #c4b5fd;
+  }
+
+  /* Tech stack */
+  .stack-group { margin-bottom: 20px; }
+
+  .stack-group-label {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 7px;
+    opacity: 0.6;
+  }
+
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .tech-tag {
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .tech-tag.red {
+    border-color: rgba(247,106,106,0.4);
+    color: #fca5a5;
+    background: rgba(247, 106, 106, 0.07);
+  }
+
+  .tech-tag.yellow {
+    border-color: rgba(247,196,106,0.4);
+    color: #fcd98a;
+    background: rgba(247,196,106,0.07);
+  }
+
+  .tech-tag.purple {
+    border-color: rgba(124,106,247,0.4);
+    color: #c4b5fd;
+    background: rgba(124,106,247,0.07);
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .sub-section-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+
+  .feature-list { list-style: none; display: grid; gap: 10px; }
+
+  .feature-list li {
+    font-size: 12.5px;
+    color: #b0b0c8;
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .feature-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+    line-height: 1.2;
+    color: var(--accent-npm);
+  }
+
+  .feature-list li strong {
+    font-weight: 500;
+    color: #fca5a5;
+  }
+
+  .card-number {
+    position: absolute;
+    top: 28px; right: 32px;
+    font-family: 'Syne', sans-serif;
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1;
+    opacity: 0.04;
+    letter-spacing: -0.05em;
+    user-select: none;
+  }
+
+  .install-block {
+    background: #0d0d14;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 16px;
+    margin-bottom: 22px;
+    font-size: 12px;
+    color: #a0f0e0;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .install-block span.prompt { color: var(--muted); }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+</style>
+</head>
+<body>
+
+<!-- LOADER-OVERLAY CARD (ORIGINAL) -->
+<div class="section-header">
+  <span class="section-label">Open Source</span>
+  <div class="section-line"></div>
+</div>
+
+<div class="section-title">Published<br><span>NPM Package</span></div>
+
+<div class="project-card">
+  <div class="card-number">03</div>
+
+  <div class="card-top">
+    <div class="project-name">loader-overlay</div>
+    <div class="badge-opensource">⬡ Open Source · NPM</div>
+  </div>
+
+  <div class="project-tagline">A lightweight, customizable React loader overlay plugin with full-page & container support</div>
+
+  <!-- Install command -->
+  <div class="install-block">
+    <span class="prompt">$</span> npm install loader-overlay
+  </div>
+
+  <!-- Links -->
+  <div class="link-cluster">
+    <a class="link-pill pill-npm" href="https://www.npmjs.com/package/loader-overlay" target="_blank">⬡ npmjs.com/package/loader-overlay</a>
+    <a class="link-pill pill-demo" href="https://loader-overlay-plugin.vercel.app/" target="_blank">↗ Plugin Demo</a>
+    <a class="link-pill pill-demo" href="https://demo-loader-overlay.vercel.app/" target="_blank">↗ Usage Demo</a>
+    <a class="link-pill pill-portfolio" href="https://swapnil-portfolio-kappa.vercel.app/" target="_blank">⌂ Portfolio</a>
+  </div>
+
+  <!-- Tech stack -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#fca5a5"></div> Core</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#fcd98a"></div> Build / Publish</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c4b5fd"></div> DX</div>
+  </div>
+
+  <div class="stack-group">
+    <div class="stack-group-label">Core</div>
+    <div class="tech-stack">
+      <span class="tech-tag red">React.js</span>
+      <span class="tech-tag red">TypeScript</span>
+      <span class="tech-tag red">CSS-in-JS</span>
+    </div>
+  </div>
+
+  <div class="stack-group">
+    <div class="stack-group-label">Build / Publish</div>
+    <div class="tech-stack">
+      <span class="tech-tag yellow">Rollup / Vite</span>
+      <span class="tech-tag yellow">NPM Registry</span>
+      <span class="tech-tag yellow">Vercel</span>
+    </div>
+  </div>
+
+  <div class="stack-group" style="margin-bottom:24px">
+    <div class="stack-group-label">Developer Experience</div>
+    <div class="tech-stack">
+      <span class="tech-tag purple">Prop-based API</span>
+      <span class="tech-tag purple">Custom Spinners</span>
+      <span class="tech-tag purple">Context / Hook Support</span>
+    </div>
+  </div>
+
+  <div class="sub-section-label">Package Features</div>
+  <ul class="feature-list">
+    <li>Built and published <strong>loader-overlay</strong> as a standalone React NPM package — a flexible loading overlay with full-page and container-scoped modes.</li>
+    <li>Supports <strong>custom spinners</strong>, configurable overlay colors, opacity, fade transitions, and message text via a clean prop-based API.</li>
+    <li>Designed for easy integration — wrap any component or the entire app and toggle with a single <strong>active</strong> prop.</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="sub-section-label">Developer Experience</div>
+  <ul class="feature-list">
+    <li>Provides <strong>Context and Hook support</strong> for triggering the loader globally from anywhere in the component tree without prop drilling.</li>
+    <li>Shipped with <strong>two live demos</strong> — a plugin playground and an integration usage example — both deployed on Vercel for instant preview.</li>
+    <li>Maintained full <strong>TypeScript types</strong> and a minimal API surface to keep the bundle lightweight and developer-friendly.</li>
+  </ul>
+</div>
+
+<!-- TASKFLOW CARD (NEW) -->
+<div class="section-header">
+  <span class="section-label">Full Stack Application</span>
+  <div class="section-line"></div>
+</div>
+
+<div class="section-title">Production-Ready<br><span>Todo Management</span></div>
+
+<div class="project-card">
+  <div class="card-number">02</div>
+
+  <div class="card-top">
+    <div class="project-name">TaskFlow</div>
+    <div class="badge-fullstack">⚡ Full Stack · MERN</div>
+  </div>
+
+  <div class="project-tagline">A complete full-stack todo management system with real-time sync, user authentication, analytics, and polished responsive UI</div>
+
+  <!-- Links -->
+  <div class="link-cluster">
+    <a class="link-pill pill-demo" href="https://taskflow-lyart-zeta.vercel.app/" target="_blank">↗ Live Demo</a>
+    <a class="link-pill pill-portfolio" href="https://github.com/swapnilhpatil/taskflow" target="_blank">⊡ GitHub Repo</a>
+    <a class="link-pill pill-portfolio" href="https://swapnil-portfolio-kappa.vercel.app/" target="_blank">⌂ Portfolio</a>
+  </div>
+
+  <!-- Tech stack -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#fca5a5"></div> Frontend</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#fcd98a"></div> Backend</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c4b5fd"></div> Database / DevOps</div>
+  </div>
+
+  <div class="stack-group">
+    <div class="stack-group-label">Frontend</div>
+    <div class="tech-stack">
+      <span class="tech-tag red">React.js</span>
+      <span class="tech-tag red">Ant Design v5</span>
+      <span class="tech-tag red">CSS Variables</span>
+      <span class="tech-tag red">TypeScript</span>
+    </div>
+  </div>
+
+  <div class="stack-group">
+    <div class="stack-group-label">Backend</div>
+    <div class="tech-stack">
+      <span class="tech-tag yellow">Node.js</span>
+      <span class="tech-tag yellow">Express.js</span>
+      <span class="tech-tag yellow">JWT Authentication</span>
+      <span class="tech-tag yellow">RESTful API</span>
+    </div>
+  </div>
+
+  <div class="stack-group" style="margin-bottom:24px">
+    <div class="stack-group-label">Database / DevOps</div>
+    <div class="tech-stack">
+      <span class="tech-tag purple">MongoDB</span>
+      <span class="tech-tag purple">Bcrypt Hashing</span>
+      <span class="tech-tag purple">Vercel Deployment</span>
+      <span class="tech-tag purple">PDF Export</span>
+    </div>
+  </div>
+
+  <div class="sub-section-label">Core Features</div>
+  <ul class="feature-list">
+    <li>Built a <strong>production-ready full-stack application</strong> with secure JWT-based authentication, including encrypted password storage using bcrypt.</li>
+    <li>Implemented <strong>real-time task synchronization</strong> with persistent state management, instant UI updates, and themed notifications across the app.</li>
+    <li>Developed <strong>advanced analytics dashboard</strong> with task completion stats, dynamic indicators, and visual status cues for better productivity tracking.</li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <div class="sub-section-label">Developer Experience & Performance</div>
+  <ul class="feature-list">
+    <li>Designed <strong>fully responsive interface</strong> with persistent theme mode using CSS variables, optimized for desktop, tablet, and mobile devices.</li>
+    <li>Implemented <strong>human-readable date labels</strong> using Day.js (Today, Tomorrow, Overdue) with color-coded visual indicators for task priority.</li>
+    <li>Shipped with <strong>PDF export functionality</strong>, security hardening (CORS, rate limiting), performance optimizations, and clean MVC architecture for maintainability.</li>
+  </ul>
+</div>
+
+</body>
+</html>
