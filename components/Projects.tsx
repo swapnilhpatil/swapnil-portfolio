@@ -1,7 +1,41 @@
 "use client";
 import React from 'react';
 
-const projects = [
+type TagType = 'fe' | 'be' | 'arch' | 'perf';
+
+interface ProjectTag {
+  name: string;
+  type: TagType;
+}
+
+interface ProjectStack {
+  label: string;
+  tags: ProjectTag[];
+}
+
+interface ProjectFeature {
+  label: string;
+  items: string[];
+}
+
+interface Project {
+  id: string;
+  name: string;
+  tagline: string;
+  url?: string;
+  githubUrl?: string;
+  demoUrl1?: string;
+  demoUrl2?: string;
+  role: string;
+  className: string;
+  color: string;
+  accent: string;
+  type: 'enterprise' | 'client' | 'oss' | 'fullstack';
+  stacks: ProjectStack[];
+  features: ProjectFeature[];
+}
+
+const projects: Project[] = [
   {
     id: "01",
     name: "V25 Platform",
@@ -10,6 +44,7 @@ const projects = [
     className: "card-v25",
     color: "#7c6af7",
     accent: "dot-fe",
+    type: "enterprise",
     stacks: [
       {
         label: "Frontend",
@@ -76,6 +111,7 @@ const projects = [
     className: "card-safesight",
     color: "#3ecfb2",
     accent: "dot-green",
+    type: "client",
     stacks: [
       {
         label: "Frontend",
@@ -129,6 +165,129 @@ const projects = [
         ]
       }
     ]
+  },
+  {
+    id: "03",
+    name: "loader-overlay",
+    tagline: "A lightweight, customizable React loader overlay plugin with full-page & container support",
+    url: "https://www.npmjs.com/package/loader-overlay",
+    githubUrl: "https://github.com/swapnilhpatil/loader-overlay-plugin",
+    demoUrl1: "https://loader-overlay-plugin.vercel.app/",
+    demoUrl2: "https://demo-loader-overlay.vercel.app/",
+    role: "Open Source · NPM",
+    className: "card-loader",
+    color: "#ff6b6b",
+    accent: "dot-pink",
+    type: "oss",
+    stacks: [
+      {
+        label: "Core",
+        tags: [
+          { name: "React.js", type: "fe" },
+          { name: "TypeScript", type: "fe" },
+          { name: "CSS-in-JS", type: "fe" }
+        ]
+      },
+      {
+        label: "Build / Publish",
+        tags: [
+          { name: "Rollup / Vite", type: "arch" },
+          { name: "NPM Registry", type: "be" },
+          { name: "Vercel", type: "arch" }
+        ]
+      },
+      {
+        label: "Developer Experience",
+        tags: [
+          { name: "Prop-based API", type: "perf" },
+          { name: "Custom Spinners", type: "perf" },
+          { name: "Context / Hook Support", type: "perf" }
+        ]
+      }
+    ],
+    features: [
+      {
+        label: "NPM Install",
+        items: [
+          "<code class='bg-black/40 px-3 py-1 rounded text-acc font-mono text-xs'>$ npm install loader-overlay</code>"
+        ]
+      },
+      {
+        label: "Package Features",
+        items: [
+          "Built and published <strong>loader-overlay</strong> as a standalone React NPM package — a flexible loading overlay with full-page and container-scoped modes.",
+          "Supports <strong>custom spinners</strong>, configurable overlay colors, opacity, fade transitions, and message text via a clean prop-based API.",
+          "Designed for easy integration — wrap any component or the entire app and toggle with a single <strong>active</strong> prop."
+        ]
+      },
+      {
+        label: "Developer Experience",
+        items: [
+          "Provides <strong>Context and Hook support</strong> for triggering the loader globally from anywhere in the component tree without prop drilling.",
+          "Shipped with <strong>two live demos</strong> — a plugin playground and an integration usage example — both deployed on Vercel for instant preview.",
+          "Maintained full <strong>TypeScript types</strong> and a minimal API surface to keep the bundle lightweight and developer-friendly."
+        ]
+      }
+    ]
+  },
+  {
+    id: "04",
+    name: "TaskFlow",
+    tagline: "A complete full-stack todo management system with real-time sync, user authentication, analytics, and polished responsive UI",
+    url: "https://taskflow-lyart-zeta.vercel.app/",
+    githubUrl: "https://github.com/swapnilhpatil/taskflow",
+    role: "Full Stack · MERN",
+    className: "card-taskflow",
+    color: "#fcd98a",
+    accent: "dot-yellow",
+    type: "fullstack",
+    stacks: [
+      {
+        label: "Frontend",
+        tags: [
+          { name: "React.js", type: "fe" },
+          { name: "Ant Design v5", type: "fe" },
+          { name: "CSS Variables", type: "fe" },
+          { name: "TypeScript", type: "fe" }
+        ]
+      },
+      {
+        label: "Backend",
+        tags: [
+          { name: "Node.js", type: "be" },
+          { name: "Express.js", type: "be" },
+          { name: "JWT Auth", type: "be" },
+          { name: "RESTful API", type: "be" }
+        ]
+      },
+      {
+        label: "Database / DevOps",
+        tags: [
+          { name: "MongoDB", type: "arch" },
+          { name: "Bcrypt", type: "arch" },
+          { name: "Vercel", type: "arch" },
+          { name: "PDF Export", type: "arch" }
+        ]
+      }
+    ],
+    features: [
+      {
+        label: "Core Features",
+        items: [
+          "Built a <strong>production-ready full-stack application</strong> with secure JWT-based authentication, including encrypted password storage using bcrypt.",
+          "Implemented <strong>real-time task synchronization</strong> with persistent state management, instant UI updates, and themed notifications across the app.",
+          "Developed <strong>advanced analytics dashboard</strong> with task completion stats, dynamic indicators, and visual status cues for better productivity tracking."
+        ]
+      },
+      {
+        label: "Dev Experience & Performance",
+        items: [
+          "Designed <strong>fully responsive interface</strong> with persistent theme mode using CSS variables, optimized for desktop, tablet, and mobile devices.",
+          "Implemented <strong>human-readable date labels</strong> using Day.js (Today, Tomorrow, Overdue) with color-coded visual indicators for task priority.",
+          "Shipped with <strong>PDF export functionality</strong>, security hardening (CORS, rate limiting), performance optimizations, and clean MVC architecture for maintainability."
+        ]
+      }
+    ]
   }
 ];
 
@@ -151,7 +310,11 @@ export default function Projects() {
             style={{ 
               background: project.id === "01" 
                 ? "linear-gradient(90deg, #7c6af7, #b47cf7)" 
-                : "linear-gradient(90deg, #3ecfb2, #4ab8ff)" 
+                : project.id === "02" 
+                ? "linear-gradient(90deg, #3ecfb2, #4ab8ff)"
+                : project.id === "03"
+                ? "linear-gradient(90deg, #ff6b6b, #f78da7)" 
+                : "linear-gradient(90deg, #fcd98a, #f7b733)"
             }}
           />
           
@@ -161,7 +324,12 @@ export default function Projects() {
 
           <div className="flex justify-between items-start flex-wrap gap-4 mb-4">
             <div>
-              <h3 className={`text-2xl font-bold tracking-tight mb-1 ${project.id === "01" ? "text-[#c4b5fd]" : "text-[#3ecfb2]"}`}>
+              <h3 className={`text-2xl font-bold tracking-tight mb-1 ${
+                project.id === "01" ? "text-[#c4b5fd]" : 
+                project.id === "02" ? "text-[#3ecfb2]" : 
+                project.id === "03" ? "text-[#ff8a8a]" :
+                "text-[#fcd98a]"
+              }`}>
                 {project.name}
               </h3>
               <div className="flex items-center gap-3 flex-wrap">
@@ -179,6 +347,37 @@ export default function Projects() {
                     ↗ {project.url.replace('https://', '')}
                   </a>
                 )}
+                {project.githubUrl && (
+                  <a 
+                    href={project.githubUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    aria-label={`Github repository: ${project.name}`}
+                    className="text-[10px] text-white/60 border border-white/10 bg-white/5 px-2 py-0.5 rounded-full hover:bg-white/10 transition-colors"
+                  >
+                    Github
+                  </a>
+                )}
+                {project.id === "03" && project.demoUrl1 && (
+                  <a 
+                    href={project.demoUrl1} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[10px] text-[#f7a86a] border border-[#f7a86a]/20 bg-[#f7a86a]/5 px-2 py-0.5 rounded-full hover:bg-[#f7a86a]/10 transition-colors"
+                  >
+                    ↗ Plugin Demo
+                  </a>
+                )}
+                {project.id === "03" && project.demoUrl2 && (
+                  <a 
+                    href={project.demoUrl2} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[10px] text-[#4ab8ff] border border-[#4ab8ff]/20 bg-[#4ab8ff]/5 px-2 py-0.5 rounded-full hover:bg-[#4ab8ff]/10 transition-colors"
+                  >
+                    ↗ Usage Demo
+                  </a>
+                )}
               </div>
             </div>
             <div className="text-[10px] font-mono uppercase tracking-[0.15em] text-slate-500 border border-white/10 px-3 py-1 rounded">
@@ -189,9 +388,13 @@ export default function Projects() {
           {/* Legend */}
           <div className="flex flex-wrap gap-4 mb-6">
             <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 tracking-wider">
-              <div className={`w-2 h-2 rounded-full ${project.id === "01" ? "bg-[#7c6af7]" : "bg-[#3ecfb2]"}`} /> Frontend
+              <div 
+                className="w-2 h-2 rounded-full" 
+                style={{ backgroundColor: project.color }}
+              /> Frontend
             </div>
-            {project.id === "01" ? (
+            
+            {project.type === 'enterprise' && (
               <>
                 <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 tracking-wider">
                   <div className="w-2 h-2 rounded-full bg-[#f7a86a]" /> Architecture
@@ -200,13 +403,37 @@ export default function Projects() {
                   <div className="w-2 h-2 rounded-full bg-[#4ab8ff]" /> Backend / Infra
                 </div>
               </>
-            ) : (
+            )}
+            
+            {project.type === 'client' && (
               <>
                 <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 tracking-wider">
                   <div className="w-2 h-2 rounded-full bg-[#4ab8ff]" /> Backend
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 tracking-wider">
                   <div className="w-2 h-2 rounded-full bg-[#f7a86a]" /> Performance / Data
+                </div>
+              </>
+            )}
+            
+            {project.type === 'oss' && (
+              <>
+                <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 tracking-wider">
+                  <div className="w-2 h-2 rounded-full bg-[#f7a86a]" /> Build / Publish
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 tracking-wider">
+                  <div className="w-2 h-2 rounded-full bg-[#4ab8ff]" /> DX / Performance
+                </div>
+              </>
+            )}
+            
+            {project.type === 'fullstack' && (
+              <>
+                <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 tracking-wider">
+                  <div className="w-2 h-2 rounded-full bg-[#4ab8ff]" /> Backend
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 tracking-wider">
+                  <div className="w-2 h-2 rounded-full bg-[#f7a86a]" /> Database / DevOps
                 </div>
               </>
             )}
@@ -224,8 +451,8 @@ export default function Projects() {
                       key={tIdx} 
                       className={`text-[10px] font-mono px-3 py-1 rounded-full border transition-colors ${
                         tag.type === "fe" ? "border-acc/30 text-acc bg-acc/5 hover:bg-acc/10" :
+                        tag.type === "be" || tag.type === "perf" ? "border-[#4ab8ff]/30 text-[#90d4ff] bg-[#4ab8ff]/5 hover:bg-[#4ab8ff]/10" :
                         tag.type === "arch" ? "border-[#f7a86a]/30 text-[#f7c89a] bg-[#f7a86a]/5 hover:bg-[#f7a86a]/10" :
-                        tag.type === "be" ? "border-[#4ab8ff]/30 text-[#90d4ff] bg-[#4ab8ff]/5 hover:bg-[#4ab8ff]/10" :
                         "border-[#f7a86a]/30 text-[#f7c89a] bg-[#f7a86a]/5 hover:bg-[#f7a86a]/10"
                       }`}
                     >
